@@ -1,22 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+    token: null,
+    email: null,
+};
 
-const counterSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    increment(state) {
-      state.value++;
+const authSlice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        loginUser(state, action) {
+            state = { ...state, ...action.payload };
+        },
+        logoutUser(state) {
+            state = initialState;
+        },
     },
-    decrement(state) {
-      state.value--;
-    },
-    incrementByAmount(state, action: PayloadAction<number>) {
-      state.value += action.payload;
-    },
-  },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { loginUser, logoutUser } = authSlice.actions;
+export default authSlice.reducer;
