@@ -8,13 +8,18 @@ import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { loginUser } from "./store/slices/authSlice";
+import LoggedInRoute from "./components/Route/LoggedInRoute";
+import LoggedOutRoute from "./components/Route/LoggedOutRoute";
 
 // Components
 import { ToastContainer } from "react-toastify";
 import Layout from "./components/Layout";
-import Login from "./components/Login/index.js";
-import Register from "./components/Register/index.js";
 import Spinner from "./components/Spinner";
+
+// Pages
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
+import HomePage from "./pages";
 
 const App = () => {
     const [checkingAuthStatus, setCheckingAuthStatus] = useState(true);
@@ -46,12 +51,15 @@ const App = () => {
                     <ToastContainer />
                     <Layout>
                         <Switch>
-                            <Route path="/login" component={Login} />
-                            <Route
-                                path="/register"
-                                exact
-                                component={Register}
-                            />
+                            <Route path="/" exact>
+                                <HomePage />
+                            </Route>
+                            <LoggedOutRoute path="/login">
+                                <LoginPage />
+                            </LoggedOutRoute>
+                            <LoggedOutRoute path="/register" exact>
+                                <RegisterPage />
+                            </LoggedOutRoute>
                         </Switch>
                     </Layout>
                 </>
