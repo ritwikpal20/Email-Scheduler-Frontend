@@ -1,4 +1,5 @@
 import styles from "./App.module.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // firebase
 import firebase from "./firebase.js";
@@ -32,7 +33,7 @@ const App = () => {
                 const idToken = await user.getIdToken();
                 const email = user.email;
                 console.log("user", user);
-                dispatch(loginUser(idToken, email));
+                dispatch(loginUser({ idToken, email }));
             } else {
                 // User is signed out
                 // ...

@@ -1,4 +1,3 @@
-import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Container } from "react-bootstrap";
 
@@ -7,10 +6,7 @@ const Layout = (props) => {
     return (
         <>
             <Navbar />
-            <Container>
-                <Sidebar />
-                {children}
-            </Container>
+            <Container>{children}</Container>
         </>
     );
 };

@@ -2,7 +2,7 @@
 import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const LoggedInRoute = ({ children, ...rest }) => {
+const LoggedOutRoute = ({ children, ...rest }) => {
     let token = useSelector((state) => state.auth.token);
 
     return (
@@ -24,4 +24,4 @@ const LoggedInRoute = ({ children, ...rest }) => {
     );
 };
 
-export default LoggedInRoute;
+export default LoggedOutRoute;
