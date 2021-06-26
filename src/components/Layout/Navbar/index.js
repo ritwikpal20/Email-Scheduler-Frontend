@@ -8,7 +8,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { logoutUser } from "../../../store/slices/authSlice";
 
 const NavbarComp = () => {
-    const token = useSelector((state) => state.auth.token);
+    const { token, name, email } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -28,17 +28,19 @@ const NavbarComp = () => {
 
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/">Email Scheduler</Navbar.Brand>
+            <Navbar.Brand href="/">Email Scheduler &nbsp;&nbsp;</Navbar.Brand>
+            {token ? (
+                <>
+                    <small>
+                        {" "}
+                        <em className="text-danger">{name ?? email}</em>
+                    </small>
+                    &nbsp;&nbsp;
+                </>
+            ) : null}
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    {token ? (
-                        <>
-                            <NavLink to="/inbox">Inbox</NavLink>
-                            &nbsp;&nbsp;
-                        </>
-                    ) : null}
-                </Nav>
+                <Nav className="mr-auto"></Nav>
                 <Nav>
                     {token ? (
                         <>

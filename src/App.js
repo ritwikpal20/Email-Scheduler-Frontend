@@ -1,11 +1,12 @@
 import styles from "./App.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // firebase
 import firebase from "./firebase.js";
 
 // React and Redux
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { loginUser } from "./store/slices/authSlice";
@@ -21,6 +22,7 @@ import Spinner from "./components/Spinner";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import HomePage from "./pages";
+import RegisterCompletePage from "./pages/RegisterComplete";
 
 const App = () => {
     const [checkingAuthStatus, setCheckingAuthStatus] = useState(true);
@@ -32,8 +34,11 @@ const App = () => {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const idToken = await user.getIdToken();
                 const email = user.email;
-                console.log("user", user);
-                dispatch(loginUser({ idToken, email }));
+                const name = user.displayName;
+                console.log("user", user.displayName);
+                dispatch(
+                    loginUser({ token: idToken, email: email, name: name })
+                );
             } else {
                 // User is signed out
                 // ...
@@ -52,14 +57,17 @@ const App = () => {
                     <ToastContainer />
                     <Layout>
                         <Switch>
-                            <Route path="/" exact>
+                            <LoggedInRoute path="/" exact>
                                 <HomePage />
-                            </Route>
+                            </LoggedInRoute>
                             <LoggedOutRoute path="/login">
                                 <LoginPage />
                             </LoggedOutRoute>
                             <LoggedOutRoute path="/register" exact>
                                 <RegisterPage />
+                            </LoggedOutRoute>
+                            <LoggedOutRoute path="/register/complete" exact>
+                                <RegisterCompletePage />
                             </LoggedOutRoute>
                         </Switch>
                     </Layout>
