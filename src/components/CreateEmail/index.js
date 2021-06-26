@@ -90,7 +90,7 @@ const CreateEmail = (props) => {
                                 required
                                 style={{ width: "100%" }}
                                 placeholder=""
-                                value={content}
+                                value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
                             ></input>
                         </Col>

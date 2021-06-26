@@ -24,6 +24,7 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import HomePage from "./pages";
 import RegisterCompletePage from "./pages/RegisterComplete";
+import HistoryPage from "./pages/history";
 
 const App = () => {
     const [checkingAuthStatus, setCheckingAuthStatus] = useState(true);
@@ -62,9 +63,15 @@ const App = () => {
                             <LoggedInRoute path="/" exact>
                                 <HomePage />
                             </LoggedInRoute>
+                            <LoggedInRoute path="/history">
+                                <HistoryPage />
+                            </LoggedInRoute>
+
+                            {/* out */}
                             <LoggedOutRoute path="/login">
                                 <LoginPage />
                             </LoggedOutRoute>
+
                             <LoggedOutRoute path="/register" exact>
                                 <RegisterPage />
                             </LoggedOutRoute>
