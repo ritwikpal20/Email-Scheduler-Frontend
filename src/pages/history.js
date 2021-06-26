@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import Inbox from "../components/Inbox";
+import SentEmails from "../components/SentEmails";
 
 const HistoryPage = () => {
     return (
@@ -7,7 +7,7 @@ const HistoryPage = () => {
             <Helmet>
                 <title>history Page</title>
             </Helmet>
-            <Inbox />
+            <SentEmails />
         </>
     );
 };

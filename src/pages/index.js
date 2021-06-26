@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import CreateEmail from "../components/CreateEmail/index.js";
+import Inbox from "../components/Inbox/index.js";
 
 const HomePage = () => {
     const handleChange = () => {
@@ -14,6 +15,7 @@ const HomePage = () => {
             <Helmet>
                 <title>Home Page</title>
             </Helmet>
+            <Inbox />
             <CreateEmail show={show} setShow={setShow} />
             <Row>
                 <Col className="text-center">

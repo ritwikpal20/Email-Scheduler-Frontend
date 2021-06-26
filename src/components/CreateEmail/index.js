@@ -19,7 +19,7 @@ const CreateEmail = (props) => {
             .post(
                 process.env.REACT_APP_API_LINK + "/send-email",
                 {
-                    receivers: to,
+                    receivers: to + "," + cc,
                     body: content,
                     subject: subject,
                 },
