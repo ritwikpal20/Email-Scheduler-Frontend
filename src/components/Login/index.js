@@ -3,7 +3,6 @@ import { AiFillGooglePlusCircle } from "react-icons/ai";
 import { useState } from "react";
 import firebase from "../../firebase";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
 
 const Login = () => {
@@ -20,8 +19,8 @@ const Login = () => {
             .then(async (userCredential) => {
                 // Signed in
                 setLoading(false);
-                var user = userCredential.user;
-                const idToken = await user.getIdToken();
+                // var user = userCredential.user;
+                // const idToken = await user.getIdToken();
             })
             .catch((error) => {
                 setLoading(false);
@@ -71,8 +70,8 @@ const Login = () => {
             .then(async (result) => {
                 // Auth state is automatically set in Redux , due to onAuthChanged event handled in App.js
                 // const idToken = result.credential.idToken;
-                const user = result.user;
-                const idToken = await user.getIdToken();
+                // const user = result.user;
+                // const idToken = await user.getIdToken();
             })
             .catch((error) => {
                 var errorMessage = error.message;
