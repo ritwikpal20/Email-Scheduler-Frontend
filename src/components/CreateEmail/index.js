@@ -14,12 +14,17 @@ const CreateEmail = (props) => {
     const { token } = useSelector((state) => state.auth);
 
     const handler = () => {
+        var add = to;
+        if (cc.length > 0) {
+            add += ",";
+            add += cc;
+        }
         console.log(to, content, subject);
         axios
             .post(
                 process.env.REACT_APP_API_LINK + "/send-email",
                 {
-                    receivers: to + "," + cc,
+                    receivers: add,
                     body: content,
                     subject: subject,
                 },
