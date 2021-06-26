@@ -5,6 +5,9 @@ import firebase from "../../firebase";
 import { loginUser } from "../../store/slices/authSlice";
 import { useHistory } from "react-router-dom";
 
+// utilities
+import { createUser } from "../../utilities/user";
+
 const RegisterComplete = () => {
     const history = useHistory();
     const [email, setEmail] = useState("");
@@ -42,7 +45,8 @@ const RegisterComplete = () => {
                     console.log("user", user, "idToken", idToken);
                     dispatch(loginUser({ token: idToken, email: user.email }));
                     user.updatePassword(password)
-                        .then(function () {
+                        .then(async function () {
+                            await createUser(idToken);
                             history.push("/");
                         })
                         .catch(function (error) {

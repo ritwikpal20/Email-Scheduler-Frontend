@@ -17,6 +17,7 @@ import LoggedOutRoute from "./components/Route/LoggedOutRoute";
 import { ToastContainer } from "react-toastify";
 import Layout from "./components/Layout";
 import Spinner from "./components/Spinner";
+import CreateEmail from "./components/CreateEmail";
 
 // Pages
 import LoginPage from "./pages/Login";
@@ -56,6 +57,7 @@ const App = () => {
                 <>
                     <ToastContainer />
                     <Layout>
+                        <CreateEmail />
                         <Switch>
                             <LoggedInRoute path="/" exact>
                                 <HomePage />

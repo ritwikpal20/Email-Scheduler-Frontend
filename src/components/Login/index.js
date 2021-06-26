@@ -5,6 +5,9 @@ import firebase from "../../firebase";
 import { toast } from "react-toastify";
 import { Button, Spinner } from "react-bootstrap";
 
+// utilities
+import { createUser } from "../../utilities/user";
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -70,8 +73,9 @@ const Login = () => {
             .then(async (result) => {
                 // Auth state is automatically set in Redux , due to onAuthChanged event handled in App.js
                 // const idToken = result.credential.idToken;
-                // const user = result.user;
-                // const idToken = await user.getIdToken();
+                const user = result.user;
+                const idToken = await user.getIdToken();
+                createUser(idToken);
             })
             .catch((error) => {
                 var errorMessage = error.message;

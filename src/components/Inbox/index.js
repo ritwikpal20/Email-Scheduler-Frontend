@@ -5,7 +5,7 @@ const Inbox = () => {
     return (
         <Container>
             <Row>
-                {arr.map((mail) => (
+                {/* {arr.map((mail) => (
                     <>
                         <Col md={4}>
                             <b>{mail.name}</b>
@@ -17,7 +17,7 @@ const Inbox = () => {
                             <p>{mail.date}</p>
                         </Col>
                     </>
-                ))}
+                ))} */}
             </Row>
         </Container>
     );

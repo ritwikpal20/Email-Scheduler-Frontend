@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import Inbox from "../components/Inbox/index.js";
 
 const HomePage = () => {
     return (
@@ -6,6 +7,7 @@ const HomePage = () => {
             <Helmet>
                 <title>Home Page</title>
             </Helmet>
+            {/* <Inbox /> */}
         </>
     );
 };
