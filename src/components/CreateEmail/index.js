@@ -36,8 +36,8 @@ const CreateEmail = (props) => {
                     receivers: add,
                     body: content,
                     subject: subject,
-                    scheduleTime: "",
-                    scheduleType: scheduleType,
+                    // scheduleTime: "",
+                    // scheduleType: scheduleType,
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             )
@@ -266,7 +266,7 @@ const CreateEmail = (props) => {
                             <Select
                                 // onChange={(option, action) => onSelectDataChange(option, action)}
                                 options={Array.from(
-                                    { length: 59 },
+                                    { length: 60 },
                                     (_, k) => k + 1
                                 )?.map((number) => {
                                     return {
