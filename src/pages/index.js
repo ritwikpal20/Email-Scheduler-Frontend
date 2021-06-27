@@ -15,6 +15,7 @@ const HomePage = () => {
             <Helmet>
                 <title>Home Page</title>
             </Helmet>
+            <h1>inbox</h1>
             <Inbox />
             <CreateEmail show={show} setShow={setShow} />
             <Row>
