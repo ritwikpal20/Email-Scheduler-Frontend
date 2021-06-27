@@ -28,7 +28,7 @@ const NavbarComp = () => {
 
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/">Email Scheduler &nbsp;&nbsp;</Navbar.Brand>
+            <Navbar.Brand href="/">Email Scheduler&nbsp;&nbsp;</Navbar.Brand>
             {token ? (
                 <>
                     <small>
