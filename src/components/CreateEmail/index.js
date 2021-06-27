@@ -5,6 +5,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
+function convertTZ(date, tzString) {
+    return new Date(
+        (typeof date === "string" ? new Date(date) : date).toLocaleString(
+            "en-US",
+            { timeZone: tzString }
+        )
+    );
+}
+
 const CreateEmail = (props) => {
     // const [show, setShow] = useState(props.show);
     const [to, setRecepient] = useState("");
@@ -13,7 +22,7 @@ const CreateEmail = (props) => {
     const [content, setContent] = useState("");
 
     const [showScheduler, setShowScheduler] = useState(false);
-    const [scheduleType, setScheduleType] = useState("");
+    const [scheduleType, setScheduleType] = useState(null);
 
     const [hour, setHour] = useState("");
     const [second, setSecond] = useState("");
@@ -29,7 +38,35 @@ const CreateEmail = (props) => {
             add += ",";
             add += cc;
         }
-        // console.log(to, content, subject, "data");
+
+        // console.log()
+        var strMin = minute;
+        var str = "0";
+        if (minute.toString().length !== 2) {
+            str += strMin;
+        }
+
+        var strSec = second;
+        var strS = "0";
+        if (second.toString().length !== 2) {
+            strS += strSec;
+        }
+
+        var strHou = hour;
+        var strH = "0";
+        if (hour.toString().length !== 2) {
+            strH += strHou;
+        }
+
+        var time = `2021-${month}-${date}T${strH}:${str}:${strS}.000`;
+        if (scheduleType === "" || scheduleType === null) {
+            time = null;
+        }
+        if (scheduleType === "recurring") {
+            time = new Date(new Date().getTime() + 1000 * second);
+        }
+
+        console.log(time, "wedfeg");
         axios
             .post(
                 process.env.REACT_APP_API_LINK + "/send-email",
@@ -37,36 +74,41 @@ const CreateEmail = (props) => {
                     receivers: add,
                     body: content,
                     subject: subject,
-                    // scheduleTime: "",
-                    // scheduleType: scheduleType,
+                    scheduleTime: time,
+                    scheduleType: scheduleType,
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             )
             .then((res) => {
-                alert("Your email was successfully sent!");
+                if (scheduleType === "" || scheduleType === null)
+                    alert("Your email was successfully sent!");
+                else alert("Your email was successfully scheduled!");
                 props.setShow(false);
-                window.location.href();
             })
             .catch((err) => console.log(err));
     };
 
     const monthInYear = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        { value: "01", label: "January" },
+        { value: "02", label: "February" },
+        { value: "03", label: "March" },
+
+        { value: "04", label: "April" },
+        { value: "05", label: "May" },
+        { value: "06", label: "June" },
+
+        { value: "07", label: "July" },
+        { value: "08", label: "August" },
+        { value: "09", label: "Sepetember" },
+
+        { value: "10", label: "October" },
+        { value: "11", label: "November" },
+        { value: "12", label: "December" },
     ];
     const handleCheckboxChange = () => {
         if (showScheduler === true) {
             setShowScheduler(false);
+            setScheduleType(null);
         } else {
             setShowScheduler(true);
         }
@@ -281,7 +323,7 @@ const CreateEmail = (props) => {
                                     }
                                     options={Array.from(
                                         { length: 60 },
-                                        (_, k) => k + 1
+                                        (_, k) => k + 20
                                     )?.map((number) => {
                                         return {
                                             value: number,
@@ -403,12 +445,7 @@ const CreateEmail = (props) => {
                                         onChange={(option, action) =>
                                             onSelectDataChange(option, action)
                                         }
-                                        options={monthInYear.map((number) => {
-                                            return {
-                                                value: `${number}`,
-                                                label: `${number}`,
-                                            };
-                                        })}
+                                        options={monthInYear}
                                         name="month"
                                         className="text-muted"
                                         isSearchable={false}

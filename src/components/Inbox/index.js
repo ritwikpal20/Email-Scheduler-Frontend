@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, Container, Row, Spinner } from "react-bootstrap";
+import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import HowItWorks from "../../HowItWorks";
 
 const Inbox = () => {
     const { token, email } = useSelector((state) => state.auth);
@@ -10,6 +11,12 @@ const Inbox = () => {
     function myFunction(value, index, array) {
         if (email !== value.email) return value.email;
     }
+
+    // const handleChange = () => {
+    //     setShow(true);
+    // };
+
+    // const [show, setShow] = useState(false);
     useEffect(() => {
         setLoading(true);
         axios
@@ -21,7 +28,10 @@ const Inbox = () => {
                 setArr(res.data);
                 setLoading(false);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                setLoading(false);
+                console.log(err);
+            });
     }, []);
     return (
         <Container>
@@ -32,6 +42,15 @@ const Inbox = () => {
                     </Spinner>
                 ) : (
                     <>
+                        {arr.length === 0 && (
+                            <>
+                                <Container>
+                                    <Row>
+                                        <HowItWorks />
+                                    </Row>
+                                </Container>
+                            </>
+                        )}
                         {arr.map((mail) => (
                             <>
                                 <Card
