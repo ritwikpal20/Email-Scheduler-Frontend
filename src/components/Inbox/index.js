@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Card, Container, Row, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const Inbox = () => {

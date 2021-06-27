@@ -24,11 +24,6 @@ const CreateEmail = (props) => {
     const { token } = useSelector((state) => state.auth);
 
     const handler = () => {
-        var scheduleTime = {};
-        // if(scheduleType === "weekly"){
-        //     scheduleTime.hours = "",
-        //     sch
-        // }
         var add = to;
         if (cc.length > 0) {
             add += ",";
@@ -55,15 +50,6 @@ const CreateEmail = (props) => {
             .catch((err) => console.log(err));
     };
 
-    const daysInWeek = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
     const monthInYear = [
         "January",
         "February",
