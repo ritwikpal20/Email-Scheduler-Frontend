@@ -1,3 +1,38 @@
 .dialogwm {
     height: 100% !important;
 }
+.light__grey__color {
+    color: var(--light-grey);
+}
+.radio__button__container input[type="radio"] {
+    opacity: 0;
+    border: 02px solid var(--light-grey);
+    position: fixed;
+    width: 0;
+    display: inline-block !important;
+}
+
+.radio__button__container label {
+    display: inline-block;
+    background-color: white;
+    padding: 4px 8px;
+    /* font-size: 16px; */
+    border: 02px solid var(--light-grey);
+    border-radius: 5px;
+    color: var(--light-grey);
+}
+
+.radio__button__container label:hover {
+    background-color: #dcdcdc;
+    cursor: pointer;
+}
+
+.radio__button__container input[type="radio"]:checked + label {
+    border: 2px solid black;
+    color: white;
+    background-color: black;
+    display: inline-block !important;
+}
+.modal-dialog-scrollable .modal-content {
+    overflow: visible;
+}
