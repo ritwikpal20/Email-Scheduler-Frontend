@@ -15,6 +15,12 @@ const CreateEmail = (props) => {
     const [showScheduler, setShowScheduler] = useState(false);
     const [scheduleType, setScheduleType] = useState("");
 
+    const [hour, setHour] = useState("");
+    const [second, setSecond] = useState("");
+    const [minute, setMinute] = useState("");
+    const [date, setDate] = useState("");
+    const [month, setMonth] = useState("");
+
     const { token } = useSelector((state) => state.auth);
 
     const handler = () => {
@@ -44,6 +50,7 @@ const CreateEmail = (props) => {
             .then((res) => {
                 alert("Your email was successfully sent!");
                 props.setShow(false);
+                window.location.href();
             })
             .catch((err) => console.log(err));
     };
@@ -57,7 +64,7 @@ const CreateEmail = (props) => {
         "Friday",
         "Saturday",
     ];
-    const month = [
+    const monthInYear = [
         "January",
         "February",
         "March",
@@ -79,9 +86,25 @@ const CreateEmail = (props) => {
         }
     };
     const onDataChange = (e) => {
-        const { name, value } = e.target;
-        console.log(value, "data", name);
+        const { value } = e.target;
+        // console.log(value, "data");
         setScheduleType(value);
+    };
+    const onSelectDataChange = (option, action) => {
+        const name = action.name;
+        const value = option.value;
+        // console.log(value, "data", name);
+        if (name === "hour") {
+            setHour(value);
+        } else if (name === "minute") {
+            setMinute(value);
+        } else if (name === "second") {
+            setSecond(value);
+        } else if (name === "date") {
+            setDate(value);
+        } else if (name === "month") {
+            setMonth(value);
+        }
     };
 
     const handleClose = () => {
@@ -101,10 +124,10 @@ const CreateEmail = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Row className="mb-2">
-                        <Col md={2} xs={2}>
+                        <Col md={3} xs={3}>
                             <label htmlFor="to">To</label>
                         </Col>
-                        <Col md={10} xs={10}>
+                        <Col md={9} xs={9}>
                             <input
                                 id="to"
                                 type="email"
@@ -117,10 +140,10 @@ const CreateEmail = (props) => {
                         </Col>
                     </Row>
                     <Row className="mb-2">
-                        <Col md={2} xs={2}>
+                        <Col md={3} xs={3}>
                             <label htmlFor="CC">CC</label>
                         </Col>
-                        <Col md={10} xs={10}>
+                        <Col md={9} xs={9}>
                             <input
                                 id="CC"
                                 type="email"
@@ -132,10 +155,10 @@ const CreateEmail = (props) => {
                         </Col>
                     </Row>
                     <Row className="mb-2">
-                        <Col md={2} xs={2}>
+                        <Col md={3} xs={3}>
                             <label htmlFor="subject">Subject</label>
                         </Col>
-                        <Col md={10} xs={10}>
+                        <Col md={9} xs={9}>
                             <input
                                 id="subject"
                                 required
@@ -147,10 +170,10 @@ const CreateEmail = (props) => {
                         </Col>
                     </Row>
                     <Row className="mb-2">
-                        <Col md={2} xs={2}>
+                        <Col md={3} xs={3}>
                             <label htmlFor="content">Content</label>
                         </Col>
-                        <Col md={10} xs={10}>
+                        <Col md={9} xs={9}>
                             <textarea
                                 id="content"
                                 rows="8"
@@ -258,81 +281,156 @@ const CreateEmail = (props) => {
                             </>
                         )}
                     </Row>
-                    <Row>
-                        <Col md={6} xs={6}>
-                            Seconds
-                        </Col>
-                        <Col md={6} xs={6}>
-                            <Select
-                                // onChange={(option, action) => onSelectDataChange(option, action)}
-                                options={Array.from(
-                                    { length: 60 },
-                                    (_, k) => k + 1
-                                )?.map((number) => {
-                                    return {
-                                        value: number,
-                                        label: `${number}`,
-                                    };
-                                })}
-                                name="hour"
-                                // closeMenuOnScroll={false}
-                                // closeMenuOnSelect={false}
-                                className="text-muted"
-                                isSearchable={false}
-                                placeholder="Select"
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={6} xs={6}>
-                            Minutes
-                        </Col>
-                        <Col md={6} xs={6}>
-                            <Select
-                                // onChange={(option, action) => onSelectDataChange(option, action)}
-                                options={Array.from(
-                                    { length: 60 },
-                                    (_, k) => k + 1
-                                )?.map((number) => {
-                                    return {
-                                        value: number,
-                                        label: `${number}`,
-                                    };
-                                })}
-                                name="hour"
-                                // closeMenuOnScroll={false}
-                                // closeMenuOnSelect={false}
-                                className="text-muted"
-                                isSearchable={false}
-                                placeholder="Select"
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={6} xs={6}>
-                            Hours
-                        </Col>
-                        <Col md={6} xs={6}>
-                            <Select
-                                // onChange={(option, action) => onSelectDataChange(option, action)}
-                                options={Array.from(
-                                    { length: 24 },
-                                    (_, k) => k + 1
-                                )?.map((number) => {
-                                    return {
-                                        value: number,
-                                        label: `${number}`,
-                                    };
-                                })}
-                                name="hour"
-                                // closeMenuOnScroll={false}
-                                // closeMenuOnSelect={false}
-                                className="text-muted"
-                                isSearchable={false}
-                                placeholder="Select"
-                            />
-                        </Col>
-                    </Row>
+
+                    {/* date & time */}
+                    {showScheduler && scheduleType !== "" && (
+                        <Row className="mb-2">
+                            <Col md={3} xs={3}>
+                                Seconds
+                            </Col>
+                            <Col md={9} xs={9}>
+                                <Select
+                                    onChange={(option, action) =>
+                                        onSelectDataChange(option, action)
+                                    }
+                                    options={Array.from(
+                                        { length: 60 },
+                                        (_, k) => k + 1
+                                    )?.map((number) => {
+                                        return {
+                                            value: number,
+                                            label: `${number}`,
+                                        };
+                                    })}
+                                    name="second"
+                                    // closeMenuOnScroll={false}
+                                    // closeMenuOnSelect={false}
+                                    className="text-muted"
+                                    isSearchable={false}
+                                    placeholder="Select"
+                                />
+                            </Col>
+                        </Row>
+                    )}
+
+                    {showScheduler &&
+                        scheduleType !== "recurring" &&
+                        scheduleType !== "" && (
+                            <Row className="mb-2">
+                                <Col md={3} xs={3}>
+                                    Minutes
+                                </Col>
+                                <Col md={9} xs={9}>
+                                    <Select
+                                        onChange={(option, action) =>
+                                            onSelectDataChange(option, action)
+                                        }
+                                        options={Array.from(
+                                            { length: 60 },
+                                            (_, k) => k + 1
+                                        )?.map((number) => {
+                                            return {
+                                                value: number,
+                                                label: `${number}`,
+                                            };
+                                        })}
+                                        name="minute"
+                                        // closeMenuOnScroll={false}
+                                        // closeMenuOnSelect={false}
+                                        className="text-muted"
+                                        isSearchable={false}
+                                        placeholder="Select"
+                                    />
+                                </Col>
+                            </Row>
+                        )}
+                    {showScheduler &&
+                        scheduleType !== "recurring" &&
+                        scheduleType !== "" && (
+                            <Row className="mb-2">
+                                <Col md={3} xs={3}>
+                                    Hours
+                                </Col>
+                                <Col md={9} xs={9}>
+                                    <Select
+                                        onChange={(option, action) =>
+                                            onSelectDataChange(option, action)
+                                        }
+                                        options={Array.from(
+                                            { length: 24 },
+                                            (_, k) => k + 1
+                                        )?.map((number) => {
+                                            return {
+                                                value: number,
+                                                label: `${number}`,
+                                            };
+                                        })}
+                                        name="hour"
+                                        // closeMenuOnScroll={false}
+                                        // closeMenuOnSelect={false}
+                                        className="text-muted"
+                                        isSearchable={false}
+                                        placeholder="Select"
+                                    />
+                                </Col>
+                            </Row>
+                        )}
+                    {showScheduler &&
+                        scheduleType !== "recurring" &&
+                        scheduleType !== "" && (
+                            <Row className="mb-2">
+                                <Col md={3} xs={3}>
+                                    Date
+                                </Col>
+                                <Col md={9} xs={9}>
+                                    <Select
+                                        onChange={(option, action) =>
+                                            onSelectDataChange(option, action)
+                                        }
+                                        options={Array.from(
+                                            { length: 31 },
+                                            (_, k) => k + 1
+                                        )?.map((number) => {
+                                            return {
+                                                value: number,
+                                                label: `${number}`,
+                                            };
+                                        })}
+                                        name="date"
+                                        className="text-muted"
+                                        isSearchable={false}
+                                        placeholder="Select"
+                                    />
+                                </Col>
+                            </Row>
+                        )}
+
+                    {showScheduler &&
+                        scheduleType !== "recurring" &&
+                        scheduleType !== "" && (
+                            <Row className="mb-2">
+                                <Col md={3} xs={3}>
+                                    Month
+                                </Col>
+                                <Col md={9} xs={9}>
+                                    <Select
+                                        onChange={(option, action) =>
+                                            onSelectDataChange(option, action)
+                                        }
+                                        options={monthInYear.map((number) => {
+                                            return {
+                                                value: `${number}`,
+                                                label: `${number}`,
+                                            };
+                                        })}
+                                        name="month"
+                                        className="text-muted"
+                                        isSearchable={false}
+                                        placeholder="Select"
+                                    />
+                                </Col>
+                            </Row>
+                        )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handler}>

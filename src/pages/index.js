@@ -15,13 +15,19 @@ const HomePage = () => {
             <Helmet>
                 <title>Home Page</title>
             </Helmet>
-            <h1>inbox</h1>
+            <h1 className="text-center">Inbox</h1>
             <Inbox />
             <CreateEmail show={show} setShow={setShow} />
             <Row>
                 <Col className="text-center">
                     <Button
                         size="lg"
+                        style={{
+                            position: "fixed",
+                            bottom: "0",
+                            right: "0",
+                            zIndex: "10",
+                        }}
                         className={`m-2 px-2 font-weight-bolder text-center`}
                         variant="warning"
                         onClick={() => handleChange(true)}

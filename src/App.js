@@ -58,7 +58,6 @@ const App = () => {
                 <>
                     <ToastContainer />
                     <Layout>
-                        <CreateEmail />
                         <Switch>
                             <LoggedInRoute path="/" exact>
                                 <HomePage />
