@@ -54,6 +54,12 @@ const HowItWorks = () => {
                     every year starting from 27 July'21, at 14:22:00.
                 </Col>
             </Row>
+            <Row className="mb-2">
+                <Col md={12}>
+                    *Users can check their <b>received, sent</b> &{" "}
+                    <b>scheduled</b> email history.
+                </Col>
+            </Row>
         </Container>
     );
 };

@@ -75,8 +75,15 @@ const SentEmails = () => {
                                         <b>CC:</b>{" "}
                                         {mail.receivers.map(myFunction)}
                                         <br />
+                                        <b>Sent at:</b>{" "}
+                                        {new Date(mail.createdAt)
+                                            .toString()
+                                            .substr(0, 33)}
+                                        <br />
                                         <b>Subject:</b> {mail.subject}
-                                        <Card.Text>{mail.body}</Card.Text>
+                                        <Card.Text>
+                                            <b>Content:</b> {mail.body}
+                                        </Card.Text>
                                     </Card.Body>
                                 </Card>
                             </>

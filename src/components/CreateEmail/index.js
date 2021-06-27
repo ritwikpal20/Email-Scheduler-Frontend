@@ -5,15 +5,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
-function convertTZ(date, tzString) {
-    return new Date(
-        (typeof date === "string" ? new Date(date) : date).toLocaleString(
-            "en-US",
-            { timeZone: tzString }
-        )
-    );
-}
-
 const CreateEmail = (props) => {
     // const [show, setShow] = useState(props.show);
     const [to, setRecepient] = useState("");
@@ -39,24 +30,24 @@ const CreateEmail = (props) => {
             add += cc;
         }
 
-        // console.log()
-        var strMin = minute;
+        // console.log(minute, second, hour, "wffrsgd");
+        var strMin = minute.toString();
         var str = "0";
         if (minute.toString().length !== 2) {
             str += strMin;
-        }
+        } else str = strMin;
 
-        var strSec = second;
+        var strSec = second.toString();
         var strS = "0";
         if (second.toString().length !== 2) {
             strS += strSec;
-        }
+        } else strS = strSec;
 
-        var strHou = hour;
+        var strHou = hour.toString();
         var strH = "0";
         if (hour.toString().length !== 2) {
             strH += strHou;
-        }
+        } else strH = strHou;
 
         var time = `2021-${month}-${date}T${strH}:${str}:${strS}.000`;
         if (scheduleType === "" || scheduleType === null) {
@@ -84,6 +75,7 @@ const CreateEmail = (props) => {
                     alert("Your email was successfully sent!");
                 else alert("Your email was successfully scheduled!");
                 props.setShow(false);
+                window.location.reload();
             })
             .catch((err) => console.log(err));
     };
@@ -311,7 +303,7 @@ const CreateEmail = (props) => {
                     </Row>
 
                     {/* date & time */}
-                    {showScheduler && scheduleType !== "" && (
+                    {showScheduler && scheduleType !== null && (
                         <Row className="mb-2">
                             <Col md={3} xs={3}>
                                 Seconds
@@ -343,7 +335,7 @@ const CreateEmail = (props) => {
 
                     {showScheduler &&
                         scheduleType !== "recurring" &&
-                        scheduleType !== "" && (
+                        scheduleType !== null && (
                             <Row className="mb-2">
                                 <Col md={3} xs={3}>
                                     Minutes
@@ -374,7 +366,7 @@ const CreateEmail = (props) => {
                         )}
                     {showScheduler &&
                         scheduleType !== "recurring" &&
-                        scheduleType !== "" && (
+                        scheduleType !== null && (
                             <Row className="mb-2">
                                 <Col md={3} xs={3}>
                                     Hours
@@ -405,7 +397,7 @@ const CreateEmail = (props) => {
                         )}
                     {showScheduler &&
                         scheduleType !== "recurring" &&
-                        scheduleType !== "" && (
+                        scheduleType !== null && (
                             <Row className="mb-2">
                                 <Col md={3} xs={3}>
                                     Date
@@ -435,7 +427,7 @@ const CreateEmail = (props) => {
 
                     {showScheduler &&
                         scheduleType !== "recurring" &&
-                        scheduleType !== "" && (
+                        scheduleType !== null && (
                             <Row className="mb-2">
                                 <Col md={3} xs={3}>
                                     Month

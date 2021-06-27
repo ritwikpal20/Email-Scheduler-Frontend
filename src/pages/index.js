@@ -3,6 +3,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import CreateEmail from "../components/CreateEmail/index.js";
 import Inbox from "../components/Inbox/index.js";
+import ScheduledEmails from "../components/ScheduledEmail/index.js";
 
 const HomePage = () => {
     const handleChange = () => {
@@ -17,6 +18,7 @@ const HomePage = () => {
             </Helmet>
 
             <Inbox />
+            <ScheduledEmails />
             <CreateEmail show={show} setShow={setShow} />
             <Row>
                 <Col className="text-center">

@@ -1,21 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Badge, Card, Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import HowItWorks from "../../HowItWorks";
 
-const Inbox = () => {
+const ScheduledEmails = () => {
     const { token, email } = useSelector((state) => state.auth);
     const [arr, setArr] = useState([]);
     const [loading, setLoading] = useState(false);
     function myFunction(value, index, array) {
-        if (email !== value.email) return value.email;
+        if (email !== value.email && index > 0) return value.email + ", ";
     }
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get(process.env.REACT_APP_API_LINK + "/received-emails", {
+            .get(process.env.REACT_APP_API_LINK + "/scheduled-emails", {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -31,24 +30,15 @@ const Inbox = () => {
     return (
         <Container>
             <Row>
-                {loading ? (
-                    <Spinner animation="border" role="status" size="lg">
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
-                ) : (
+                {!loading && (
                     <>
-                        <Container>
-                            <Row>
-                                <HowItWorks />
-                            </Row>
-                        </Container>
-                        {arr.length === 0 ? (
-                            <></>
-                        ) : (
+                        {arr.length !== 0 && (
                             <Container>
                                 <Row>
                                     <Col>
-                                        <h1 className="text-center">Inbox</h1>
+                                        <h1 className="text-center">
+                                            Scheduled Emails
+                                        </h1>
                                     </Col>
                                 </Row>
                             </Container>
@@ -65,10 +55,15 @@ const Inbox = () => {
                                     }}
                                 >
                                     <Card.Body>
-                                        <b>From:</b> {mail.sender.email}
+                                        <Badge variant="success">
+                                            {mail.scheduleType}
+                                        </Badge>
                                         <br />
-                                        <b>Received At:</b>{" "}
-                                        {new Date(mail.createdAt)
+                                        <hr></hr>
+                                        <b>To:</b> {mail.receivers[0].email}
+                                        <br />
+                                        <b>Next email due:</b>{" "}
+                                        {new Date(mail.scheduleDate)
                                             .toString()
                                             .substr(0, 33)}
                                         <br />
@@ -76,7 +71,9 @@ const Inbox = () => {
                                         {mail.receivers.map(myFunction)}
                                         <br />
                                         <b>Subject:</b> {mail.subject}
-                                        <Card.Text>{mail.body}</Card.Text>
+                                        <Card.Text>
+                                            <b>Content:</b> {mail.body}
+                                        </Card.Text>
                                     </Card.Body>
                                 </Card>
                             </>
@@ -88,4 +85,4 @@ const Inbox = () => {
     );
 };
 
-export default Inbox;
+export default ScheduledEmails;
