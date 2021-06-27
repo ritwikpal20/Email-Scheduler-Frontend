@@ -42,7 +42,7 @@ const Inbox = () => {
                     </Spinner>
                 ) : (
                     <>
-                        {arr.length === 0 && (
+                        {arr.length === 0 ? (
                             <>
                                 <Container>
                                     <Row>
@@ -50,7 +50,16 @@ const Inbox = () => {
                                     </Row>
                                 </Container>
                             </>
+                        ) : (
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        <h1 className="text-center">Inbox</h1>
+                                    </Col>
+                                </Row>
+                            </Container>
                         )}
+
                         {arr.map((mail) => (
                             <>
                                 <Card
@@ -63,6 +72,12 @@ const Inbox = () => {
                                 >
                                     <Card.Body>
                                         <b>From:</b> {mail.sender.email}
+                                        <br />
+                                        <b>Received At:</b>{" "}
+                                        {new Date(mail.createdAt)
+                                            .toString()
+                                            .substr(0, 33)}
+                                        {/* {mail.createdAt.getHour()} */}
                                         <br />
                                         <b>CC:</b>{" "}
                                         {mail.receivers.map(myFunction)}

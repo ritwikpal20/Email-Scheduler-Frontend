@@ -74,7 +74,7 @@ const CreateEmail = (props) => {
                     receivers: add,
                     body: content,
                     subject: subject,
-                    scheduleTime: time,
+                    scheduleDate: time,
                     scheduleType: scheduleType,
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
